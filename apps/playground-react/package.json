@@ -1,0 +1,12 @@
+﻿{
+  "name": "@web-monitoring/playground-react",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput false",
+    "build": "tsc -p tsconfig.json",
+    "preview": "node -e \"console.log('preview is added in Task 9')\"",
+    "test": "vitest run --passWithNoTests"
+  }
+}

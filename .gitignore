@@ -1,1 +1,10 @@
-.worktrees/
+﻿.worktrees/
+node_modules/
+.turbo/
+dist/
+.next/
+coverage/
+playwright-report/
+.env
+.env.*
+supabase/.temp/
