@@ -12,9 +12,12 @@ describe("groupIssue", () => {
 
     await groupIssue(repository, {
       id: "evt_1",
+      projectId: "proj_1",
+      appId: "app_1",
       type: "error",
       route: "/orders/123",
       release: "web@abc123",
+      occurredAt: new Date("2026-04-15T00:00:00.000Z"),
       payload: {
         message: "playground runtime error 998877",
         stack: "Error: playground runtime error 998877\n at checkout (app.ts:1:1)",
@@ -22,9 +25,22 @@ describe("groupIssue", () => {
     })
 
     expect(repository.findIssueByFingerprint).toHaveBeenCalledWith(
-      "/orders/:id::playground runtime error :num::at checkout (app.ts:1:1)::web@abc123",
+      {
+        projectId: "proj_1",
+        appId: "app_1",
+        fingerprint:
+          "/orders/:id::playground runtime error :num::at checkout (app.ts:1:1)::web@abc123",
+      },
     )
-    expect(repository.insertIssue).toHaveBeenCalledTimes(1)
+    expect(repository.insertIssue).toHaveBeenCalledWith({
+      projectId: "proj_1",
+      appId: "app_1",
+      fingerprint:
+        "/orders/:id::playground runtime error :num::at checkout (app.ts:1:1)::web@abc123",
+      firstSeenAt: new Date("2026-04-15T00:00:00.000Z"),
+      lastSeenAt: new Date("2026-04-15T00:00:00.000Z"),
+      lastEventId: "evt_1",
+    })
     expect(repository.incrementIssue).not.toHaveBeenCalled()
   })
 
@@ -37,9 +53,12 @@ describe("groupIssue", () => {
 
     await groupIssue(repository, {
       id: "evt_2",
+      projectId: "proj_1",
+      appId: "app_1",
       type: "error",
       route: "/orders/456",
       release: "web@abc123",
+      occurredAt: new Date("2026-04-15T00:01:00.000Z"),
       payload: {
         message: "Order 112233 failed",
         stack: "Error: Order 112233 failed\n at checkout (app.ts:1:1)",
@@ -47,6 +66,10 @@ describe("groupIssue", () => {
     })
 
     expect(repository.insertIssue).not.toHaveBeenCalled()
-    expect(repository.incrementIssue).toHaveBeenCalledWith("issue_1", "evt_2")
+    expect(repository.incrementIssue).toHaveBeenCalledWith(
+      "issue_1",
+      "evt_2",
+      new Date("2026-04-15T00:01:00.000Z"),
+    )
   })
 })

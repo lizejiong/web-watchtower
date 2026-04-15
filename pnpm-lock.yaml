@@ -91,7 +91,14 @@ importers:
         specifier: ^5.4.21
         version: 5.4.21(@types/node@24.12.2)
 
-  apps/worker: {}
+  apps/worker:
+    dependencies:
+      '@web-monitoring/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      drizzle-orm:
+        specifier: ^0.44.2
+        version: 0.44.7(@electric-sql/pglite@0.4.4)(pg@8.20.0)(postgres@3.4.9)
 
   packages/ai: {}
 
