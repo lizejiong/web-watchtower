@@ -10,5 +10,6 @@ CREATE TABLE "group_issue_jobs" (
 	CONSTRAINT "group_issue_jobs_event_id_unique" UNIQUE("event_id")
 );
 --> statement-breakpoint
-ALTER TABLE "issues" ADD COLUMN "last_event_id" text NOT NULL;--> statement-breakpoint
+ALTER TABLE "issues" ADD COLUMN "last_event_id" text DEFAULT '' NOT NULL;--> statement-breakpoint
+ALTER TABLE "issues" ALTER COLUMN "last_event_id" DROP DEFAULT;--> statement-breakpoint
 CREATE UNIQUE INDEX "issues_project_app_fingerprint_idx" ON "issues" USING btree ("project_id","app_id","fingerprint");

@@ -120,6 +120,7 @@ export const groupIssueJobs = pgTable("group_issue_jobs", {
   eventId: text("event_id").notNull().unique(),
   status: text("status").notNull().default("pending"),
   attempts: integer("attempts").notNull().default(0),
+  claimToken: text("claim_token"),
   availableAt: timestamp("available_at", { withTimezone: true }).defaultNow().notNull(),
   claimedAt: timestamp("claimed_at", { withTimezone: true }),
   completedAt: timestamp("completed_at", { withTimezone: true }),

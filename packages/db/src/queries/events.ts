@@ -50,7 +50,9 @@ export async function insertEventWithDedupe(db: DatabaseClient, event: InsertEve
       ...event,
       id: event.id ?? randomUUID(),
     })
-    .onConflictDoNothing()
+    .onConflictDoNothing({
+      target: [events.projectId, events.appId, events.eventId],
+    })
     .returning({ id: events.id })
 
   return {
