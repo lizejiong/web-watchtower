@@ -1106,7 +1106,7 @@ git commit -m "feat: add dashboard auth skeleton"
 - Modify: `apps/worker/src/jobs/group-issue.test.ts`
 - Test: `apps/playground-react/e2e/playground.spec.ts`
 
-- [ ] **Step 1: Add a failing end-to-end test for runtime error ingestion**
+- [x] **Step 1: Add a failing end-to-end test for runtime error ingestion**
 
 ```ts
 import { test, expect } from "@playwright/test"
@@ -1118,12 +1118,12 @@ test("runtime error appears in ingest flow", async ({ page }) => {
 })
 ```
 
-- [ ] **Step 2: Run the failing verification command**
+- [x] **Step 2: Run the failing verification command**
 
 Run: `pnpm test`
 Expected: FAIL because the end-to-end path is not fully wired yet.
 
-- [ ] **Step 3: Complete missing glue code and scripts needed for the phase**
+- [x] **Step 3: Complete missing glue code and scripts needed for the phase**
 
 ```json
 {
@@ -1141,7 +1141,7 @@ export function formatFlushStatus(result: { acceptedEventIds: string[]; duplicat
 }
 ```
 
-- [ ] **Step 4: Run the verification suite**
+- [x] **Step 4: Run the verification suite**
 
 Run: `pnpm lint`
 Expected: PASS.
@@ -1155,7 +1155,7 @@ Expected: PASS.
 Run: `pnpm test:e2e`
 Expected: PASS for the playground runtime error flow.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add package.json apps packages

@@ -16,11 +16,14 @@ describe("groupIssue", () => {
       route: "/orders/123",
       release: "web@abc123",
       payload: {
-        message: "Order 998877 failed",
-        stack: "Error: Order 998877 failed\n at checkout (app.ts:1:1)",
+        message: "playground runtime error 998877",
+        stack: "Error: playground runtime error 998877\n at checkout (app.ts:1:1)",
       },
     })
 
+    expect(repository.findIssueByFingerprint).toHaveBeenCalledWith(
+      "/orders/:id::playground runtime error :num::at checkout (app.ts:1:1)::web@abc123",
+    )
     expect(repository.insertIssue).toHaveBeenCalledTimes(1)
     expect(repository.incrementIssue).not.toHaveBeenCalled()
   })

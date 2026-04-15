@@ -5,8 +5,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "dev:phase1": "turbo run dev --filter=@web-monitoring/ingest-api --filter=@web-monitoring/worker --filter=@web-monitoring/playground-react --filter=@web-monitoring/dashboard",
     "lint": "turbo run lint",
     "test": "turbo run test",
+    "test:e2e": "pnpm --filter @web-monitoring/playground-react e2e",
     "typecheck": "turbo run typecheck"
   },
   "devDependencies": {

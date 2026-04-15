@@ -6,9 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@web-monitoring/sdk-web/index": fileURLToPath(
-        new URL("../../packages/sdk-web/src/index.ts", import.meta.url),
-      ),
+      "@web-monitoring/sdk-web": fileURLToPath(new URL("../../packages/sdk-web/src", import.meta.url)),
     },
   },
   server: {

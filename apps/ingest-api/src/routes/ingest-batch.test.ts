@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from "vitest"
 
 import { buildApp } from "../app"
 
-function createEvent(eventId: string) {
+function createEvent(eventId: string, message = `boom-${eventId}`) {
   return {
     id: eventId,
     batchId: "bat_1",
@@ -15,7 +15,7 @@ function createEvent(eventId: string) {
     url: "https://example.com/page",
     tags: {},
     context: {},
-    payload: { message: `boom-${eventId}` },
+    payload: { message },
   }
 }
 
@@ -41,11 +41,23 @@ describe("ingest batch route", () => {
       payload: {
         batchId: "bat_1",
         sentAt: Date.now(),
-        events: [createEvent("evt_1"), createEvent("evt_2"), createEvent("bat_1")],
+        events: [
+          createEvent("evt_1", "playground runtime error"),
+          createEvent("evt_2"),
+          createEvent("bat_1"),
+        ],
       },
     })
 
     expect(response.statusCode).toBe(202)
+    expect(repository.insertEvent).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        payload: expect.objectContaining({
+          message: "playground runtime error",
+        }),
+      }),
+    )
     expect(response.json()).toEqual({
       batchId: "bat_1",
       accepted: ["evt_1"],
