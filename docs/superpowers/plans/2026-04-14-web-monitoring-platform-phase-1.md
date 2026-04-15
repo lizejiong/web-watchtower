@@ -670,7 +670,7 @@ git commit -m "feat: add idempotent batch ingest semantics"
 - Test: `apps/worker/src/lib/fingerprint.test.ts`
 - Test: `apps/worker/src/jobs/group-issue.test.ts`
 
-- [ ] **Step 1: Write failing tests for fingerprint normalization and issue upsert**
+- [x] **Step 1: Write failing tests for fingerprint normalization and issue upsert**
 
 ```ts
 import { describe, expect, it } from "vitest"
@@ -694,12 +694,12 @@ describe("buildErrorFingerprint", () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/worker test`
 Expected: FAIL because the worker job and fingerprint helper do not exist yet.
 
-- [ ] **Step 3: Implement queue publishing and issue grouping**
+- [x] **Step 3: Implement queue publishing and issue grouping**
 
 ```ts
 export function normalizeRoute(route?: string) {
@@ -741,12 +741,12 @@ export async function groupIssue(
 }
 ```
 
-- [ ] **Step 4: Run worker tests**
+- [x] **Step 4: Run worker tests**
 
 Run: `pnpm --filter @web-monitoring/worker test`
 Expected: PASS for fingerprint normalization and issue grouping.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/worker apps/ingest-api/src/services/job-publisher.ts
