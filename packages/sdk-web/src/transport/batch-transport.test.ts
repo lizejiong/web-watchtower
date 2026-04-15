@@ -3,6 +3,40 @@ import { describe, expect, it, vi } from "vitest"
 import { flushBatch } from "./batch-transport"
 
 describe("flushBatch", () => {
+  it("posts a batch to the configured endpoint with the write key header", async () => {
+    const fetcher = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        batchId: "bat_1",
+        accepted: ["evt_1"],
+        duplicated: [],
+        rejected: [],
+      }),
+    })
+
+    await flushBatch(
+      fetcher as never,
+      {
+        batchId: "bat_1",
+        sentAt: Date.now(),
+        events: [{ id: "evt_1" }],
+      } as never,
+      {
+        endpoint: "https://ingest.example.com/api/v1/ingest/batches",
+        writeKey: "wk_live",
+      } as never,
+    )
+
+    expect(fetcher).toHaveBeenCalledWith(
+      "https://ingest.example.com/api/v1/ingest/batches",
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          "x-write-key": "wk_live",
+        }),
+      }),
+    )
+  })
+
   it("keeps only retryable rejected events for replay", async () => {
     const fetcher = vi.fn().mockResolvedValue({
       ok: true,

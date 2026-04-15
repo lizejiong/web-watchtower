@@ -30,6 +30,8 @@ export function initMonitoring(config: SdkConfig) {
     release: config.release,
     maxQueueSize: config.transport.maxQueueSize,
     fetcher,
+    endpoint: config.transport.endpoint,
+    writeKey: config.transport.writeKey,
     targetWindow,
   })
 }

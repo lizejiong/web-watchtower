@@ -120,7 +120,11 @@ importers:
 
   packages/github: {}
 
-  packages/sdk-web: {}
+  packages/sdk-web:
+    dependencies:
+      '@web-monitoring/shared':
+        specifier: workspace:*
+        version: link:../shared
 
   packages/shared:
     dependencies:

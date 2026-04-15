@@ -37,4 +37,15 @@ export class MemoryQueue<T extends MemoryQueueItem> {
   items() {
     return [...this.events]
   }
+
+  /** flush 成功处理后，按事件 id 从内存队列中移除不需要重放的事件。 */
+  removeByIds(ids: readonly string[]) {
+    const idSet = new Set(ids)
+
+    for (let index = this.events.length - 1; index >= 0; index -= 1) {
+      if (idSet.has(this.events[index]!.id)) {
+        this.events.splice(index, 1)
+      }
+    }
+  }
 }
