@@ -766,7 +766,7 @@ git commit -m "feat: add issue grouping worker"
 - Test: `packages/sdk-web/src/sampling.test.ts`
 - Test: `packages/sdk-web/src/queue/memory-queue.test.ts`
 
-- [ ] **Step 1: Write failing tests for sampling and queue overflow behavior**
+- [x] **Step 1: Write failing tests for sampling and queue overflow behavior**
 
 ```ts
 import { describe, expect, it } from "vitest"
@@ -792,12 +792,12 @@ describe("MemoryQueue", () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/sdk-web test`
 Expected: FAIL because the SDK core modules do not exist yet.
 
-- [ ] **Step 3: Implement SDK config, sampling, and queue primitives**
+- [x] **Step 3: Implement SDK config, sampling, and queue primitives**
 
 ```ts
 export type EventType = "error" | "performance" | "request" | "behavior" | "breadcrumb" | "custom"
@@ -839,12 +839,12 @@ export class MemoryQueue<T extends { id: string; type: EventType }> {
 }
 ```
 
-- [ ] **Step 4: Run SDK tests**
+- [x] **Step 4: Run SDK tests**
 
 Run: `pnpm --filter @web-monitoring/sdk-web test`
 Expected: PASS for sampling and queue behavior.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add packages/sdk-web
