@@ -4,9 +4,26 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "tsc -p tsconfig.json --watch --preserveWatchOutput false",
-    "build": "tsc -p tsconfig.json",
-    "preview": "node -e \"console.log('preview is added in Task 9')\"",
-    "test": "vitest run --passWithNoTests"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@web-monitoring/sdk-web": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^25.0.1",
+    "vite": "^5.4.21"
   }
 }

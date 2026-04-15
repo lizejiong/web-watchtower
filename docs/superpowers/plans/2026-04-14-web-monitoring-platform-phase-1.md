@@ -954,7 +954,7 @@ git commit -m "feat: add sdk batch transport semantics"
 - Test: `apps/playground-react/src/App.test.tsx`
 - Test: `apps/playground-react/e2e/playground.spec.ts`
 
-- [ ] **Step 1: Write failing UI tests for trigger buttons**
+- [x] **Step 1: Write failing UI tests for trigger buttons**
 
 ```tsx
 import { render, screen } from "@testing-library/react"
@@ -968,12 +968,12 @@ it("shows controls for manual telemetry triggers", async () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/playground-react test`
 Expected: FAIL because the app does not exist yet.
 
-- [ ] **Step 3: Implement the trigger UI and SDK bootstrapping**
+- [x] **Step 3: Implement the trigger UI and SDK bootstrapping**
 
 ```tsx
 import { useState } from "react"
@@ -1006,7 +1006,7 @@ export function App() {
 }
 ```
 
-- [ ] **Step 4: Run playground tests and one E2E flow**
+- [x] **Step 4: Run playground tests and one E2E flow**
 
 Run: `pnpm --filter @web-monitoring/playground-react test`
 Expected: PASS.
@@ -1014,7 +1014,7 @@ Expected: PASS.
 Run: `pnpm exec playwright test apps/playground-react/e2e/playground.spec.ts`
 Expected: PASS for basic trigger rendering and click flow.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/playground-react
