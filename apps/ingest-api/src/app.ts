@@ -1,16 +1,16 @@
 import Fastify from "fastify"
 
 import { registerHealthRoute } from "./routes/health"
-import { registerIngestRoutes } from "./routes/ingest"
+import { registerIngestRoutes, type IngestRouteDependencies } from "./routes/ingest"
 
 /** 构建可注入测试的 Fastify 应用。 */
-export function buildApp() {
+export function buildApp(dependencies: IngestRouteDependencies = {}) {
   const app = Fastify({
     logger: true,
   })
 
-  app.register(registerHealthRoute)
-  app.register(registerIngestRoutes)
+  registerHealthRoute(app)
+  registerIngestRoutes(app, dependencies)
 
   return app
 }

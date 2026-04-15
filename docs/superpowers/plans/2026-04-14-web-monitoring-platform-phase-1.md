@@ -577,7 +577,7 @@ git commit -m "feat: add ingest api skeleton"
 - Test: `apps/ingest-api/src/routes/ingest-batch.test.ts`
 - Test: `apps/ingest-api/src/services/ingest-service.test.ts`
 
-- [ ] **Step 1: Write failing tests for accepted, duplicated, and rejected events**
+- [x] **Step 1: Write failing tests for accepted, duplicated, and rejected events**
 
 ```ts
 import { describe, expect, it, vi } from "vitest"
@@ -606,12 +606,12 @@ describe("ingestBatch", () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/ingest-api test -- ingest-service`
 Expected: FAIL because the ingest service does not implement dedupe behavior yet.
 
-- [ ] **Step 3: Implement batch persistence semantics**
+- [x] **Step 3: Implement batch persistence semantics**
 
 ```ts
 import type { BatchIngestRequest, BatchIngestResponse, EventEnvelope } from "@web-monitoring/shared/events"
@@ -647,12 +647,12 @@ export async function ingestBatch(
 }
 ```
 
-- [ ] **Step 4: Run the service and route tests**
+- [x] **Step 4: Run the service and route tests**
 
 Run: `pnpm --filter @web-monitoring/ingest-api test`
 Expected: PASS for idempotent batch handling and partial success cases.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/ingest-api
