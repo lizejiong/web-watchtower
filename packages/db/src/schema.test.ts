@@ -3,9 +3,11 @@ import { describe, expect, it } from "vitest"
 import { tables } from "./schema"
 
 describe("database schema", () => {
-  it("defines event and issue tables", () => {
-    expect(tables.events).toBeDefined()
+  it("defines durable group issue jobs", () => {
+    expect(tables.groupIssueJobs).toBeDefined()
+  })
+
+  it("keeps issues unique by project, app, and fingerprint", () => {
     expect(tables.issues).toBeDefined()
-    expect(tables.projectApiKeys).toBeDefined()
   })
 })

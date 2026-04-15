@@ -104,6 +104,25 @@ export const issues = pgTable("issues", {
   firstSeenAt: timestamp("first_seen_at", { withTimezone: true }).notNull(),
   lastSeenAt: timestamp("last_seen_at", { withTimezone: true }).notNull(),
   occurrences: integer("occurrences").notNull().default(0),
+  lastEventId: text("last_event_id").notNull(),
+}, (table) => ({
+  fingerprintUnique: uniqueIndex("issues_project_app_fingerprint_idx").on(
+    table.projectId,
+    table.appId,
+    table.fingerprint,
+  ),
+}))
+
+/** 鍒嗙粍 issue 浠诲姟琛ㄣ€?*/
+export const groupIssueJobs = pgTable("group_issue_jobs", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  eventId: text("event_id").notNull().unique(),
+  status: text("status").notNull().default("pending"),
+  attempts: integer("attempts").notNull().default(0),
+  availableAt: timestamp("available_at", { withTimezone: true }).defaultNow().notNull(),
+  claimedAt: timestamp("claimed_at", { withTimezone: true }),
+  completedAt: timestamp("completed_at", { withTimezone: true }),
+  lastError: text("last_error"),
 })
 
 /** 发布产物与 Source Map 元数据表。 */
@@ -130,4 +149,5 @@ export const tables = {
   events,
   issues,
   releaseArtifacts,
+  groupIssueJobs,
 }
