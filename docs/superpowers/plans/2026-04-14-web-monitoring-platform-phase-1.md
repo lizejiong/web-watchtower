@@ -199,7 +199,7 @@ git commit -m "chore: scaffold monorepo foundation"
 - Create: `packages/shared/src/rules.ts`
 - Test: `packages/shared/src/events.test.ts`
 
-- [ ] **Step 1: Write the failing schema contract tests**
+- [x] **Step 1: Write the failing schema contract tests**
 
 ```ts
 import { describe, expect, it } from "vitest"
@@ -259,12 +259,12 @@ describe("batchIngestResponseSchema", () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/shared test`
 Expected: FAIL with module or schema symbol not found errors.
 
-- [ ] **Step 3: Implement the shared schemas and types**
+- [x] **Step 3: Implement the shared schemas and types**
 
 ```ts
 import { z } from "zod"
@@ -336,12 +336,12 @@ export type BatchIngestRequest = z.infer<typeof batchIngestRequestSchema>
 export type BatchIngestResponse = z.infer<typeof batchIngestResponseSchema>
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `pnpm --filter @web-monitoring/shared test`
 Expected: PASS for schema contract tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add packages/shared
