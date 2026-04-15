@@ -2,7 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "incremental": true,
+    "jsx": "preserve",
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
+    "noEmit": true,
+    "plugins": [{ "name": "next" }],
     "tsBuildInfoFile": "./tsconfig.tsbuildinfo"
   },
-  "files": []
+  "include": ["next-env.d.ts", "app/**/*.ts", "app/**/*.tsx", "lib/**/*.ts", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }

@@ -1034,7 +1034,7 @@ git commit -m "feat: add sdk playground app"
 - Create: `apps/dashboard/lib/server-client.ts`
 - Test: `apps/dashboard/lib/auth.test.ts`
 
-- [ ] **Step 1: Write failing auth guard tests**
+- [x] **Step 1: Write failing auth guard tests**
 
 ```ts
 import { describe, expect, it } from "vitest"
@@ -1051,12 +1051,12 @@ describe("canAccessProject", () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/dashboard test`
 Expected: FAIL because the auth helper does not exist yet.
 
-- [ ] **Step 3: Implement auth helpers and the first protected project page**
+- [x] **Step 3: Implement auth helpers and the first protected project page**
 
 ```ts
 export type DashboardRole = "org_admin" | "project_admin" | "developer" | "viewer"
@@ -1083,7 +1083,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ projec
 }
 ```
 
-- [ ] **Step 4: Run dashboard tests**
+- [x] **Step 4: Run dashboard tests**
 
 Run: `pnpm --filter @web-monitoring/dashboard test`
 Expected: PASS for the auth helper.
@@ -1091,7 +1091,7 @@ Expected: PASS for the auth helper.
 Run: `pnpm --filter @web-monitoring/dashboard build`
 Expected: PASS for the Next.js app skeleton.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/dashboard
