@@ -1,10 +1,11 @@
-﻿.worktrees/
+.worktrees/
 node_modules/
 .turbo/
 dist/
 .next/
 coverage/
 playwright-report/
+*.tsbuildinfo
 .env
 .env.*
 supabase/.temp/

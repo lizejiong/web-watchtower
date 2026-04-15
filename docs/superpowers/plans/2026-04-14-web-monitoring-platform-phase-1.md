@@ -30,7 +30,7 @@
 - Create: `packages/github/package.json`
 - Test: `pnpm-workspace.yaml`, `package.json`
 
-- [ ] **Step 1: Create the root workspace files**
+- [x] **Step 1: Create the root workspace files**
 
 ```json
 {
@@ -83,7 +83,7 @@ packages:
 }
 ```
 
-- [ ] **Step 2: Add shared TypeScript and ignore files**
+- [x] **Step 2: Add shared TypeScript and ignore files**
 
 ```json
 {
@@ -124,7 +124,7 @@ auto-install-peers=true
 strict-peer-dependencies=false
 ```
 
-- [ ] **Step 3: Add package manifests for apps and packages**
+- [x] **Step 3: Add package manifests for apps and packages**
 
 ```json
 {
@@ -173,7 +173,7 @@ strict-peer-dependencies=false
 }
 ```
 
-- [ ] **Step 4: Install dependencies and verify workspace wiring**
+- [x] **Step 4: Install dependencies and verify workspace wiring**
 
 Run: `pnpm install`
 Expected: install completes and creates a lockfile without workspace resolution errors.
@@ -181,7 +181,7 @@ Expected: install completes and creates a lockfile without workspace resolution 
 Run: `pnpm build`
 Expected: workspace tasks run, even if some packages are still skeletons.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git init
