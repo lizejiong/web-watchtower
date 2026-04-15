@@ -489,7 +489,7 @@ git commit -m "feat: add phase 1 database schema"
 - Test: `apps/ingest-api/src/routes/health.test.ts`
 - Test: `apps/ingest-api/src/routes/ingest-auth.test.ts`
 
-- [ ] **Step 1: Write failing API tests for health and missing key rejection**
+- [x] **Step 1: Write failing API tests for health and missing key rejection**
 
 ```ts
 import { describe, expect, it } from "vitest"
@@ -519,12 +519,12 @@ describe("ingest auth", () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/ingest-api test`
 Expected: FAIL because the Fastify app and routes do not exist yet.
 
-- [ ] **Step 3: Implement the Fastify app, health route, and write-key guard**
+- [x] **Step 3: Implement the Fastify app, health route, and write-key guard**
 
 ```ts
 import Fastify from "fastify"
@@ -555,12 +555,12 @@ export function buildApp() {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `pnpm --filter @web-monitoring/ingest-api test`
 Expected: PASS for the health and auth tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add apps/ingest-api
