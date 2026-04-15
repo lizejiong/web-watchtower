@@ -1,0 +1,1 @@
+CREATE INDEX "group_issue_jobs_status_available_at_idx" ON "group_issue_jobs" USING btree ("status","available_at");

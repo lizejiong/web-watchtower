@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto"
+
 import { and, eq, gte, sql } from "drizzle-orm"
 
 import type { DatabaseClient } from "../client"
@@ -19,6 +21,44 @@ export function buildEventDedupeWhere(identity: EventIdentity) {
   )
 }
 
+export type InsertEventInput = {
+  id?: string
+  projectId: string
+  appId: string
+  eventId: string
+  batchId: string
+  type: string
+  sessionId: string
+  release?: string | null
+  route?: string | null
+  payload: Record<string, unknown>
+  tags: Record<string, string>
+  context: Record<string, unknown>
+  occurredAt: Date
+  receivedAt?: Date
+}
+
+export type EventInsertResult = {
+  accepted: boolean
+  status: "accepted" | "duplicate"
+}
+
+export async function insertEventWithDedupe(db: DatabaseClient, event: InsertEventInput) {
+  const rows = await db
+    .insert(events)
+    .values({
+      ...event,
+      id: event.id ?? randomUUID(),
+    })
+    .onConflictDoNothing()
+    .returning({ id: events.id })
+
+  return {
+    accepted: rows.length > 0,
+    status: rows.length > 0 ? "accepted" : "duplicate",
+  } satisfies EventInsertResult
+}
+
 export async function countProjectEventsSince(
   db: DatabaseClient,
   identity: { projectId: string; appId: string },
@@ -35,5 +75,5 @@ export async function countProjectEventsSince(
       ),
     )
 
-  return rows[0]?.count ?? 0
+  return Number(rows[0]?.count ?? 0)
 }

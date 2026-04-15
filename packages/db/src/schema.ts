@@ -1,6 +1,7 @@
 import { sql } from "drizzle-orm"
 import {
   integer,
+  index,
   jsonb,
   pgEnum,
   pgTable,
@@ -123,7 +124,12 @@ export const groupIssueJobs = pgTable("group_issue_jobs", {
   claimedAt: timestamp("claimed_at", { withTimezone: true }),
   completedAt: timestamp("completed_at", { withTimezone: true }),
   lastError: text("last_error"),
-})
+}, (table) => ({
+  pendingAvailableAtIdx: index("group_issue_jobs_status_available_at_idx").on(
+    table.status,
+    table.availableAt,
+  ),
+}))
 
 /** 发布产物与 Source Map 元数据表。 */
 export const releaseArtifacts = pgTable("release_artifacts", {
