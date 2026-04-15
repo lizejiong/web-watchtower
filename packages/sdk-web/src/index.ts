@@ -1,4 +1,7 @@
 export * from "./config"
+export * from "./events/error"
 export * from "./init"
 export * from "./queue"
+export * from "./retry"
 export * from "./sampling"
+export * from "./transport/batch-transport"

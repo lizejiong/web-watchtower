@@ -861,7 +861,7 @@ git commit -m "feat: add sdk core queue and sampling"
 - Test: `packages/sdk-web/src/transport/batch-transport.test.ts`
 - Test: `packages/sdk-web/src/retry.test.ts`
 
-- [ ] **Step 1: Write failing tests for accepted, duplicated, retryable, and non-retryable outcomes**
+- [x] **Step 1: Write failing tests for accepted, duplicated, retryable, and non-retryable outcomes**
 
 ```ts
 import { describe, expect, it, vi } from "vitest"
@@ -898,12 +898,12 @@ describe("flushBatch", () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/sdk-web test -- batch-transport`
 Expected: FAIL because the transport does not interpret partial success responses yet.
 
-- [ ] **Step 3: Implement transport and retry filtering**
+- [x] **Step 3: Implement transport and retry filtering**
 
 ```ts
 import type { BatchIngestRequest, BatchIngestResponse } from "@web-monitoring/shared/events"
@@ -932,12 +932,12 @@ export async function flushBatch(
 }
 ```
 
-- [ ] **Step 4: Run SDK transport tests**
+- [x] **Step 4: Run SDK transport tests**
 
 Run: `pnpm --filter @web-monitoring/sdk-web test`
 Expected: PASS for transport and retry behavior.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add packages/sdk-web
