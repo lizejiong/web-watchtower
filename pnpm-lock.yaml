@@ -44,6 +44,9 @@ importers:
 
   apps/ingest-api:
     dependencies:
+      '@web-monitoring/db':
+        specifier: workspace:*
+        version: link:../../packages/db
       '@web-monitoring/shared':
         specifier: workspace:*
         version: link:../../packages/shared

@@ -11,6 +11,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@web-monitoring/db": "workspace:*",
     "@web-monitoring/shared": "workspace:*",
     "fastify": "^5.6.1"
   }

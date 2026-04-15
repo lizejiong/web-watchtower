@@ -1,10 +1,8 @@
-import type { EventEnvelope } from "@web-monitoring/shared/events"
-
 /** group_issue 任务定义。 */
 export type GroupIssueJob = {
   type: "group_issue"
   payload: {
-    event: EventEnvelope
+    eventId: string
   }
 }
 
@@ -16,12 +14,10 @@ export type JobPublisher = {
 /** 发布错误事件的 Issue 归并任务。 */
 export async function publishGroupIssueJob(
   publisher: JobPublisher,
-  event: EventEnvelope,
+  eventId: string,
 ) {
   await publisher.publish({
     type: "group_issue",
-    payload: {
-      event,
-    },
+    payload: { eventId },
   })
 }

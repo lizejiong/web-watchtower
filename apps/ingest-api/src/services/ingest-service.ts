@@ -4,6 +4,8 @@ import type {
   EventEnvelope,
 } from "@web-monitoring/shared/events"
 
+import { type JobPublisher, publishGroupIssueJob } from "./job-publisher"
+
 /** 事件持久化仓储接口。 */
 export type IngestRepository = {
   insertEvent: (
@@ -14,6 +16,7 @@ export type IngestRepository = {
 /** 执行批量事件入库并构造部分成功响应。 */
 export async function ingestBatch(
   repository: IngestRepository,
+  publisher: JobPublisher,
   batch: BatchIngestRequest,
 ): Promise<BatchIngestResponse> {
   const accepted: string[] = []
@@ -34,6 +37,11 @@ export async function ingestBatch(
 
     if (result.status === "accepted") {
       accepted.push(event.id)
+
+      if (event.type === "error") {
+        await publishGroupIssueJob(publisher, event.id)
+      }
+
       continue
     }
 
