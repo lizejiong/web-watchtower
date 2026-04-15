@@ -358,7 +358,7 @@ git commit -m "feat: add shared telemetry protocol schemas"
 - Create: `packages/db/src/queries/events.ts`
 - Test: `packages/db/src/schema.test.ts`
 
-- [ ] **Step 1: Write the failing schema shape tests**
+- [x] **Step 1: Write the failing schema shape tests**
 
 ```ts
 import { describe, expect, it } from "vitest"
@@ -373,12 +373,12 @@ describe("database schema", () => {
 })
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pnpm --filter @web-monitoring/db test`
 Expected: FAIL because the schema module does not exist yet.
 
-- [ ] **Step 3: Implement the Drizzle schema for Phase 1 tables**
+- [x] **Step 3: Implement the Drizzle schema for Phase 1 tables**
 
 ```ts
 import { pgEnum, pgTable, text, timestamp, uuid, jsonb, integer, uniqueIndex } from "drizzle-orm/pg-core"
@@ -461,7 +461,7 @@ export const releaseArtifacts = pgTable("release_artifacts", {
 export const tables = { projects, apps, projectApiKeys, events, issues, releaseArtifacts }
 ```
 
-- [ ] **Step 4: Run tests and generate the first migration**
+- [x] **Step 4: Run tests and generate the first migration**
 
 Run: `pnpm --filter @web-monitoring/db test`
 Expected: PASS.
@@ -469,7 +469,7 @@ Expected: PASS.
 Run: `pnpm --filter @web-monitoring/db drizzle-kit generate`
 Expected: a migration file is generated for the Phase 1 schema.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add packages/db

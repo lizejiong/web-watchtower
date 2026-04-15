@@ -2,7 +2,10 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "incremental": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
     "tsBuildInfoFile": "./tsconfig.tsbuildinfo"
   },
-  "files": []
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"]
 }
