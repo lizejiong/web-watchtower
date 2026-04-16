@@ -5,10 +5,8 @@ import { INGEST_BATCH_PATH } from "@web-monitoring/shared/protocol"
 
 import { readWriteKey } from "../plugins/auth"
 import { ingestBatch, type IngestRepository } from "../services/ingest-service"
-import {
-  checkIngestRateLimit,
-  type RateLimitService,
-} from "../services/rate-limit-service"
+import { type JobPublisher } from "../services/job-publisher"
+import { type RateLimitService } from "../services/rate-limit-service"
 import { validateWriteKey, type KeyService } from "../services/key-service"
 
 const defaultRepository: IngestRepository = {
@@ -22,12 +20,19 @@ const defaultKeyService: KeyService = {
 }
 
 const defaultRateLimitService: RateLimitService = {
-  checkIngestRateLimit,
+  async checkIngestRateLimit() {
+    return { allowed: true }
+  },
+}
+
+const defaultJobPublisher: JobPublisher = {
+  async publish() {},
 }
 
 /** ingest 路由依赖。 */
 export type IngestRouteDependencies = {
   ingestRepository?: IngestRepository
+  jobPublisher?: JobPublisher
   keyService?: KeyService
   rateLimitService?: RateLimitService
 }
@@ -38,6 +43,7 @@ export function registerIngestRoutes(
   dependencies: IngestRouteDependencies = {},
 ) {
   const repository = dependencies.ingestRepository ?? defaultRepository
+  const jobPublisher = dependencies.jobPublisher ?? defaultJobPublisher
   const keyService = dependencies.keyService ?? defaultKeyService
   const rateLimitService = dependencies.rateLimitService ?? defaultRateLimitService
 
@@ -48,16 +54,11 @@ export function registerIngestRoutes(
       return reply.code(401).send({ error: "missing_write_key" })
     }
 
-    const keyContext = await keyService.validateWriteKey(writeKey)
+    const origin = typeof request.headers.origin === "string" ? request.headers.origin : undefined
+    const keyContext = await keyService.validateWriteKey(writeKey, origin)
 
     if (!keyContext) {
       return reply.code(401).send({ error: "invalid_write_key" })
-    }
-
-    const rateLimit = await rateLimitService.checkIngestRateLimit(keyContext)
-
-    if (!rateLimit.allowed) {
-      return reply.code(429).send({ error: rateLimit.reason ?? "rate_limited" })
     }
 
     const parsed = batchIngestRequestSchema.safeParse(request.body)
@@ -66,7 +67,16 @@ export function registerIngestRoutes(
       return reply.code(400).send({ error: "invalid_batch" })
     }
 
-    const response = await ingestBatch(repository, parsed.data)
+    const rateLimit = await rateLimitService.checkIngestRateLimit(
+      keyContext,
+      parsed.data.events.length,
+    )
+
+    if (!rateLimit.allowed) {
+      return reply.code(429).send({ error: rateLimit.reason ?? "rate_limited" })
+    }
+
+    const response = await ingestBatch(repository, jobPublisher, parsed.data)
 
     return reply.code(202).send(response)
   })

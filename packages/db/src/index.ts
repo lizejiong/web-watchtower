@@ -1,3 +1,6 @@
 export * from "./client"
+export * from "./queries/api-keys"
+export * from "./queries/group-issue-jobs"
 export * from "./queries/events"
+export * from "./queries/issues"
 export * from "./schema"

@@ -8,5 +8,8 @@
     "lint": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@web-monitoring/shared": "workspace:*"
   }
 }

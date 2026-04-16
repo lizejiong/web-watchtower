@@ -1,32 +1,62 @@
 import { buildErrorFingerprint } from "../lib/fingerprint"
 
-/** Issue 归并仓储接口。 */
-export type IssueGroupingRepository = {
-  findIssueByFingerprint: (
-    fingerprint: string,
-  ) => Promise<{ id: string; occurrences: number } | null>
-  insertIssue: (fingerprint: string, eventId: string) => Promise<void>
-  incrementIssue: (issueId: string, eventId: string) => Promise<void>
+export type GroupableEvent = {
+  id: string
+  projectId: string
+  appId: string
+  type: string
+  route?: string
+  release?: string
+  occurredAt: Date
+  payload: { message?: string; stack?: string }
 }
 
-/** 执行单条错误事件的 Issue 归并。 */
+export type IssueFingerprintLookup = {
+  projectId: string
+  appId: string
+  fingerprint: string
+}
+
+export type InsertIssueInput = IssueFingerprintLookup & {
+  firstSeenAt: Date
+  lastSeenAt: Date
+  lastEventId: string
+}
+
+export type IssueGroupingRepository = {
+  findIssueByFingerprint: (
+    input: IssueFingerprintLookup,
+  ) => Promise<{ id: string; occurrences: number } | null>
+  insertIssue: (input: InsertIssueInput) => Promise<void>
+  incrementIssue: (
+    issueId: string,
+    lastEventId: string,
+    lastSeenAt: Date,
+  ) => Promise<void>
+}
+
 export async function groupIssue(
   repository: IssueGroupingRepository,
-  event: {
-    id: string
-    type: string
-    route?: string
-    release?: string
-    payload: { message?: string; stack?: string }
-  },
+  event: GroupableEvent,
 ) {
   const fingerprint = buildErrorFingerprint(event)
-  const issue = await repository.findIssueByFingerprint(fingerprint)
+  const issue = await repository.findIssueByFingerprint({
+    projectId: event.projectId,
+    appId: event.appId,
+    fingerprint,
+  })
 
   if (!issue) {
-    await repository.insertIssue(fingerprint, event.id)
+    await repository.insertIssue({
+      projectId: event.projectId,
+      appId: event.appId,
+      fingerprint,
+      firstSeenAt: event.occurredAt,
+      lastSeenAt: event.occurredAt,
+      lastEventId: event.id,
+    })
     return
   }
 
-  await repository.incrementIssue(issue.id, event.id)
+  await repository.incrementIssue(issue.id, event.id, event.occurredAt)
 }

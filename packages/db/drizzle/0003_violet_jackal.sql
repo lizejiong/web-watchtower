@@ -1,0 +1,1 @@
+ALTER TABLE "group_issue_jobs" ADD COLUMN "claim_token" text;

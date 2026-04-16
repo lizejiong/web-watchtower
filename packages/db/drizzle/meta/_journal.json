@@ -8,6 +8,27 @@
       "when": 1776218928263,
       "tag": "0000_flat_kylun",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1776236775541,
+      "tag": "0001_complete_war_machine",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1776238047270,
+      "tag": "0002_daffy_gideon",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1776240453859,
+      "tag": "0003_violet_jackal",
+      "breakpoints": true
     }
   ]
 }

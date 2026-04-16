@@ -9,5 +9,9 @@
     "lint": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run --passWithNoTests",
     "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@web-monitoring/db": "workspace:*",
+    "drizzle-orm": "^0.44.2"
   }
 }

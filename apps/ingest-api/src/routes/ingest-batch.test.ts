@@ -30,6 +30,9 @@ describe("ingest batch route", () => {
 
     const app = buildApp({
       ingestRepository: repository,
+      jobPublisher: {
+        publish: vi.fn().mockResolvedValue(undefined),
+      },
     })
 
     const response = await app.inject({
@@ -64,5 +67,51 @@ describe("ingest batch route", () => {
       duplicated: ["evt_2"],
       rejected: [{ eventId: "bat_1", reason: "invalid_event_id", retryable: false }],
     })
+  })
+
+  it("returns 429 when the batch would exceed the hourly quota", async () => {
+    const keyService = {
+      validateWriteKey: vi.fn().mockResolvedValue({
+        projectId: "proj_1",
+        appId: "app_1",
+        hourlyQuota: 1,
+        dailyQuota: 10,
+        allowedOrigins: ["https://example.com"],
+      }),
+    }
+    const rateLimitService = {
+      checkIngestRateLimit: vi.fn().mockResolvedValue({
+        allowed: false,
+        reason: "hourly_quota_exceeded",
+      }),
+    }
+    const app = buildApp({
+      keyService,
+      rateLimitService,
+    })
+
+    const response = await app.inject({
+      method: "POST",
+      url: "/api/v1/ingest/batches",
+      headers: {
+        "x-write-key": "wk_live",
+        origin: "https://example.com",
+      },
+      payload: {
+        batchId: "bat_1",
+        sentAt: Date.now(),
+        events: [createEvent("evt_1")],
+      },
+    })
+
+    expect(response.statusCode).toBe(429)
+    expect(keyService.validateWriteKey).toHaveBeenCalledWith(
+      "wk_live",
+      "https://example.com",
+    )
+    expect(rateLimitService.checkIngestRateLimit).toHaveBeenCalledWith(
+      expect.objectContaining({ projectId: "proj_1", appId: "app_1" }),
+      1,
+    )
   })
 })

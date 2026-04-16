@@ -21,5 +21,10 @@ export type SdkTransportConfig = {
 export type SdkConfig = {
   projectId: string
   appId: string
+  sessionId?: string
+  release?: string
+  route?: string
+  url?: string
+  fetcher?: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>
   transport: SdkTransportConfig
 }

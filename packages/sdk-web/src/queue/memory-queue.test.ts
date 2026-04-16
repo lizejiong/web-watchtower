@@ -12,4 +12,15 @@ describe("MemoryQueue", () => {
 
     expect(queue.items().map((item) => item.id)).toEqual(["e1", "e2"])
   })
+
+  it("removes events by id after a flush result is handled", () => {
+    const queue = new MemoryQueue(3)
+    queue.push({ id: "evt_1", type: "error" } as never)
+    queue.push({ id: "evt_2", type: "request" } as never)
+    queue.push({ id: "evt_3", type: "error" } as never)
+
+    queue.removeByIds(["evt_1", "evt_3"])
+
+    expect(queue.items().map((item) => item.id)).toEqual(["evt_2"])
+  })
 })
